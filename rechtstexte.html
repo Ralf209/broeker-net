@@ -1,0 +1,714 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>b-net – Projektmanagement & Project Coaching</title>
+
+<style>
+:root {
+    --bnet-blue: #0057FF;
+    --bnet-blue-dark: #0047D6;
+    --bnet-blue-light: #EEF4FF;
+    --text-main: #1B1D21;
+    --text-secondary: #555B65;
+    --background: #FFFFFF;
+    --background-soft: #F5F6F8;
+    --border: #DDE2EA;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    background: var(--background);
+    line-height: 1.6;
+}
+
+.container {
+    width: min(1120px, 90%);
+    margin: 0 auto;
+}
+
+header {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    background: #fff;
+}
+
+.header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+.logo-b {
+    color: var(--bnet-blue);
+    font-style: italic;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.logo-net {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+nav a {
+    margin-left: 28px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 15px;
+}
+
+nav a:hover,
+.footer-links a:hover {
+    color: var(--bnet-blue);
+}
+
+.hero {
+    position: relative;
+    padding: 110px 0 130px;
+    overflow: hidden;
+}
+
+.hero h1 {
+    max-width: 800px;
+    margin: 0 0 28px;
+    font-size: clamp(42px, 6vw, 72px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+}
+
+.hero h1 span { color: var(--bnet-blue); }
+
+.hero p {
+    max-width: 760px;
+    font-size: 21px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    left: -5%;
+    bottom: -110px;
+    width: 110%;
+    height: 150px;
+    background: var(--bnet-blue);
+    border-radius: 55% 45% 0 0 / 100% 100% 0 0;
+}
+
+.section { padding: 90px 0; }
+.section-soft { background: var(--background-soft); }
+
+.eyebrow {
+    color: var(--bnet-blue);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+}
+
+.section-title {
+    max-width: 760px;
+    margin-top: 10px;
+    font-size: 38px;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+.section-intro {
+    max-width: 760px;
+    margin-bottom: 50px;
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+.competence {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    margin-bottom: 34px;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.competence-number {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 32px;
+    color: var(--bnet-blue);
+    font-size: 22px;
+    font-weight: 700;
+    border-right: 1px solid var(--border);
+}
+
+.competence-content { padding: 32px 38px 38px; }
+
+.competence h3 {
+    margin: 0 0 16px;
+    font-size: 25px;
+    line-height: 1.3;
+}
+
+.competence p {
+    max-width: 850px;
+    color: var(--text-secondary);
+    font-size: 17px;
+}
+
+.blue-line {
+    width: 52px;
+    height: 4px;
+    margin: 18px 0 22px;
+    background: var(--bnet-blue);
+}
+
+.effect-box {
+    margin-top: 25px;
+    padding: 22px 26px;
+    background: var(--background-soft);
+    border-left: 4px solid var(--bnet-blue);
+}
+
+.effect-box strong {
+    display: block;
+    margin-bottom: 8px;
+}
+
+.project-example {
+    margin-top: 24px;
+    padding: 24px 28px;
+    background: var(--bnet-blue-light);
+    border-left: 4px solid var(--bnet-blue);
+    border-radius: 0 5px 5px 0;
+}
+
+.project-example .label {
+    margin-bottom: 6px;
+    color: var(--bnet-blue-dark);
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+
+.project-example p { margin: 0; }
+
+.legal-section {
+    padding: 90px 0;
+    border-top: 1px solid var(--border);
+}
+
+.legal-section:nth-of-type(even) {
+    background: var(--background-soft);
+}
+
+.legal-content {
+    max-width: 900px;
+}
+
+.legal-content h2 {
+    font-size: 38px;
+    margin: 0 0 34px;
+    letter-spacing: -1px;
+}
+
+.legal-content h3 {
+    margin-top: 34px;
+    margin-bottom: 10px;
+    font-size: 21px;
+}
+
+.legal-content p,
+.legal-content li {
+    color: var(--text-secondary);
+}
+
+.legal-content ul {
+    padding-left: 22px;
+}
+
+.legal-content a {
+    color: var(--bnet-blue);
+}
+
+footer {
+    padding: 38px 0;
+    border-top: 4px solid var(--bnet-blue);
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-left: 18px;
+}
+
+@media (max-width: 700px) {
+    nav { display: none; }
+    .hero { padding: 75px 0 110px; }
+    .competence { grid-template-columns: 1fr; }
+    .competence-number {
+        justify-content: flex-start;
+        padding: 20px 25px 0;
+        border-right: none;
+    }
+    .competence-content { padding: 15px 25px 30px; }
+    .footer-links a {
+        margin-left: 0;
+        margin-right: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo" aria-label="b-net">
+            <span class="logo-b">b</span>
+            <span class="logo-net">-net</span>
+        </div>
+
+        <nav aria-label="Hauptnavigation">
+            <a href="#start">Start</a>
+            <a href="#leistungen">Leistungen</a>
+            <a href="#kontakt">Kontakt</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+<section class="hero" id="start">
+    <div class="container">
+        <h1>Komplexe Projekte <span>funktionsfähig machen.</span></h1>
+        <p>
+            Wenn Technik, Organisation, Prozesse, Interessen und Menschen
+            ineinandergreifen, entstehen Herausforderungen, die über
+            klassisches Projektmanagement hinausgehen.
+        </p>
+    </div>
+</section>
+
+<section class="section section-soft" id="leistungen">
+<div class="container">
+    <div class="eyebrow">Projektmanagement &amp; Project Coaching</div>
+    <h2 class="section-title">
+        Komplexität verstehen. Steuerbarkeit herstellen. Zusammenarbeit ermöglichen.
+    </h2>
+    <p class="section-intro">
+        Vier Kompetenzfelder bilden die Grundlage meiner Arbeit in komplexen Projektsituationen.
+    </p>
+
+    <div class="competence">
+        <div class="competence-number">01</div>
+        <div class="competence-content">
+            <h3>Komplexe Systeme ganzheitlich erfassen und neu ausrichten</h3>
+            <div class="blue-line"></div>
+            <p>
+                Technische, organisatorische und strategische Zusammenhänge transparent machen,
+                unterschiedliche Perspektiven zusammenführen und daraus eine gemeinsame Zielsetzung ableiten.
+            </p>
+            <div class="effect-box">
+                <strong>Was sich dadurch verändern kann</strong>
+                Zusammenhänge und Abhängigkeiten werden sichtbar. Auswirkungen von Entscheidungen
+                können über Bereichsgrenzen hinweg betrachtet werden.
+            </div>
+        </div>
+    </div>
+
+    <div class="competence">
+        <div class="competence-number">02</div>
+        <div class="competence-content">
+            <h3>Projekte steuerbar machen und auf Zielkurs bringen</h3>
+            <div class="blue-line"></div>
+            <p>
+                Projektstruktur, Verantwortlichkeiten und Entscheidungsfähigkeit klären und daraus
+                eine belastbare Grundlage für die weitere Umsetzung schaffen.
+            </p>
+            <div class="effect-box">
+                <strong>Was sich dadurch verändern kann</strong>
+                Projektteam und Management arbeiten auf einem gemeinsamen Sachstand.
+                Verantwortlichkeiten und notwendige Entscheidungen werden transparent.
+            </div>
+        </div>
+    </div>
+
+    <div class="competence">
+        <div class="competence-number">03</div>
+        <div class="competence-content">
+            <h3>Menschen, Bereiche und Organisationen auf gemeinsame Ziele ausrichten</h3>
+            <div class="blue-line"></div>
+            <p>
+                Unterschiedliche Perspektiven und Interessen sichtbar machen, gemeinsame Ziele klären
+                und Strukturen für eine konstruktive Zusammenarbeit schaffen.
+            </p>
+            <div class="effect-box">
+                <strong>Was sich dadurch verändern kann</strong>
+                Konflikte können stärker auf Sach- und Lösungsebene bearbeitet werden.
+                Schnittstellen und Verantwortlichkeiten werden klarer.
+            </div>
+        </div>
+    </div>
+
+    <div class="competence">
+        <div class="competence-number">04</div>
+        <div class="competence-content">
+            <h3>Ursachen erkennen, Risiken präventiv steuern</h3>
+            <div class="blue-line"></div>
+            <p>
+                Risiken bis zu ihren Ursachen zurückverfolgen und Maßnahmen möglichst dort ansetzen,
+                wo kritische Entwicklungen noch beeinflusst werden können.
+            </p>
+            <div class="effect-box">
+                <strong>Was sich dadurch verändern kann</strong>
+                Kritische Entwicklungen werden früher sichtbar.
+                Projektleitung und Management behalten Handlungsspielraum und Steuerungsfähigkeit.
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<section class="section" id="kontakt">
+    <div class="container legal-content">
+        <div class="eyebrow">Kontakt</div>
+        <h2 class="section-title">Direkt ins Gespräch kommen.</h2>
+        <p>
+            <strong>Dipl.-Ing. Ralf Bröker</strong><br>
+            Martinusstraße 11<br>
+            50171 Kerpen<br>
+            Deutschland
+        </p>
+        <p>
+            E-Mail: <a href="mailto:rb@broeker-net.de">rb@broeker-net.de</a>
+        </p>
+    </div>
+</section>
+
+<section class="legal-section" id="impressum">
+    <div class="container legal-content">
+        <h2>Impressum</h2>
+
+        <h3>Angaben gemäß § 5 DDG</h3>
+        <p>
+            <strong>Dipl.-Ing. Ralf Bröker</strong><br>
+            Martinusstraße 11<br>
+            50171 Kerpen<br>
+            Deutschland
+        </p>
+        <p>
+            E-Mail: <a href="mailto:rb@broeker-net.de">rb@broeker-net.de</a><br>
+            Internet: www.broeker-net.de
+        </p>
+
+        <h3>Umsatzsteuer-Identifikationsnummer</h3>
+        <p><strong>Umsatzsteuer-ID: DE225330696</strong></p>
+
+        <h3>Verantwortlich für den Inhalt</h3>
+        <p>
+            <strong>Dipl.-Ing. Ralf Bröker</strong><br>
+            Martinusstraße 11<br>
+            50171 Kerpen
+        </p>
+        <p>
+            Soweit auf dieser Website journalistisch-redaktionell gestaltete Inhalte angeboten werden,
+            ist Dipl.-Ing. Ralf Bröker zugleich verantwortlich im Sinne des § 18 Abs. 2
+            Medienstaatsvertrags (MStV).
+        </p>
+
+        <h3>Verbraucherstreitbeilegung</h3>
+        <p>
+            Ich bin weder verpflichtet noch bereit, an Streitbeilegungsverfahren vor einer
+            Verbraucherschlichtungsstelle teilzunehmen.
+        </p>
+
+        <h3>Externe Links</h3>
+        <p>
+            Diese Website enthält gegebenenfalls Links zu externen Websites Dritter.
+            Auf deren Inhalte habe ich keinen Einfluss. Für die Inhalte der verlinkten Seiten ist
+            der jeweilige Anbieter oder Betreiber verantwortlich.
+        </p>
+        <p>
+            Sollten mir Rechtsverletzungen auf verlinkten Seiten bekannt werden, werde ich entsprechende
+            Links entfernen, soweit dies technisch möglich und zumutbar ist.
+        </p>
+
+        <h3>Urheberrecht</h3>
+        <p>
+            Die von mir erstellten Inhalte und Werke auf dieser Website unterliegen dem deutschen Urheberrecht.
+        </p>
+        <p>
+            Eine Vervielfältigung, Bearbeitung, Verbreitung oder sonstige Verwertung außerhalb der gesetzlichen
+            Grenzen des Urheberrechts bedarf meiner vorherigen Zustimmung, soweit nicht ausdrücklich etwas
+            anderes angegeben ist.
+        </p>
+        <p>
+            Soweit Inhalte Dritter verwendet werden, werden deren Rechte beachtet und entsprechende Inhalte,
+            soweit erforderlich, gekennzeichnet. Hinweise auf mögliche Rechtsverletzungen nehme ich gerne entgegen.
+            Bei Bekanntwerden berechtigter Beanstandungen werde ich die betreffenden Inhalte prüfen und
+            gegebenenfalls entfernen.
+        </p>
+    </div>
+</section>
+
+<section class="legal-section" id="datenschutz">
+    <div class="container legal-content">
+        <h2>Datenschutzerklärung</h2>
+
+        <h3>1. Verantwortlicher</h3>
+        <p>
+            Verantwortlich für die Verarbeitung personenbezogener Daten auf dieser Website ist:
+        </p>
+        <p>
+            <strong>Dipl.-Ing. Ralf Bröker</strong><br>
+            Martinusstraße 11<br>
+            50171 Kerpen<br>
+            Deutschland
+        </p>
+        <p>
+            E-Mail: <a href="mailto:rb@broeker-net.de">rb@broeker-net.de</a><br>
+            Internet: www.broeker-net.de
+        </p>
+
+        <h3>2. Allgemeine Hinweise zur Datenverarbeitung</h3>
+        <p>
+            Der Schutz Ihrer personenbezogenen Daten ist mir wichtig.
+        </p>
+        <p>
+            Personenbezogene Daten werden auf dieser Website nur verarbeitet, soweit dies für den Betrieb
+            und die Bereitstellung der Website, zur Gewährleistung ihrer Sicherheit oder zur Bearbeitung
+            einer von Ihnen vorgenommenen Kontaktaufnahme erforderlich ist.
+        </p>
+        <p>
+            Diese Website verwendet keine Analyse-, Tracking- oder Marketingdienste und keine entsprechenden Cookies.
+            Es werden insbesondere keine Dienste wie Google Analytics, Google Maps oder eingebettete YouTube-Inhalte
+            sowie keine Social-Media-Widgets eingesetzt.
+        </p>
+
+        <h3>3. Hosting</h3>
+        <p>
+            Diese Website wird bei
+        </p>
+        <p>
+            <strong>ALL-INKL.COM – Neue Medien Münnich</strong><br>
+            Hauptstraße 68<br>
+            02742 Friedersdorf<br>
+            Deutschland
+        </p>
+        <p>
+            gehostet.
+        </p>
+        <p>
+            Beim Aufruf dieser Website werden durch den Webserver technisch erforderliche Daten verarbeitet.
+            Hierzu können insbesondere gehören:
+        </p>
+        <ul>
+            <li>IP-Adresse des zugreifenden Geräts,</li>
+            <li>Datum und Uhrzeit des Zugriffs,</li>
+            <li>aufgerufene Seite bzw. Datei,</li>
+            <li>übertragene Datenmenge,</li>
+            <li>verwendeter Browser und Browserversion,</li>
+            <li>verwendetes Betriebssystem,</li>
+            <li>Referrer-URL sowie</li>
+            <li>Informationen über den Erfolg des Seitenaufrufs.</li>
+        </ul>
+        <p>
+            Diese Daten werden benötigt, um die Website technisch bereitzustellen und einen sicheren und stabilen
+            Betrieb zu gewährleisten.
+        </p>
+        <p>
+            Rechtsgrundlage für diese Verarbeitung ist Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse
+            besteht in der sicheren, zuverlässigen und technisch fehlerfreien Bereitstellung dieser Website.
+        </p>
+        <p>
+            Die Daten werden nur so lange gespeichert, wie dies zur technischen Bereitstellung und zur Gewährleistung
+            der Sicherheit der Website erforderlich ist. Eine darüber hinausgehende Speicherung erfolgt nur, soweit
+            hierfür ein konkreter Sicherheitsvorfall oder eine gesetzliche Verpflichtung besteht.
+        </p>
+        <p>
+            Mit ALL-INKL.COM besteht ein Vertrag zur Auftragsverarbeitung gemäß Art. 28 DSGVO.
+        </p>
+
+        <h3>4. SSL-/TLS-Verschlüsselung</h3>
+        <p>
+            Diese Website nutzt eine SSL- bzw. TLS-Verschlüsselung.
+        </p>
+        <p>
+            Dadurch werden Daten, die zwischen Ihrem Browser und dem Server dieser Website übertragen werden,
+            vor einer unbefugten Kenntnisnahme durch Dritte geschützt.
+        </p>
+        <p>
+            Eine verschlüsselte Verbindung erkennen Sie insbesondere daran, dass die Adresse der Website mit
+            „https://“ beginnt.
+        </p>
+
+        <h3>5. Kontaktaufnahme per E-Mail</h3>
+        <p>
+            Wenn Sie mich per E-Mail kontaktieren, werden die von Ihnen übermittelten Informationen einschließlich
+            Ihrer Kontaktdaten zum Zweck der Bearbeitung Ihrer Anfrage verarbeitet.
+        </p>
+        <p>
+            Die Verarbeitung erfolgt je nach Inhalt Ihrer Anfrage auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO,
+            wenn die Kontaktaufnahme der Anbahnung oder Durchführung eines Vertragsverhältnisses dient.
+        </p>
+        <p>
+            In allen anderen Fällen erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
+            Das berechtigte Interesse besteht in der Bearbeitung und Beantwortung Ihrer Anfrage.
+        </p>
+        <p>
+            Ihre Daten werden gelöscht, sobald sie für die Bearbeitung Ihrer Anfrage nicht mehr erforderlich sind
+            und keine gesetzlichen Aufbewahrungspflichten oder sonstigen berechtigten Gründe für eine weitere
+            Speicherung bestehen.
+        </p>
+
+        <h3>6. Cookies und Tracking</h3>
+        <p>
+            Diese Website verwendet keine Analyse-, Tracking- oder Marketing-Cookies.
+        </p>
+        <p>
+            Es werden keine Dienste eingesetzt, die das Verhalten von Besuchern zu Werbe-, Analyse- oder
+            Profilbildungszwecken verfolgen.
+        </p>
+        <p>
+            Es werden insbesondere keine externen Analyseplattformen, Marketingdienste, Social-Media-Widgets,
+            Google Maps oder eingebetteten YouTube-Videos verwendet.
+        </p>
+        <p>
+            Soweit für die rein technische Bereitstellung der Website keine Speicherung von Informationen auf Ihrem
+            Endgerät erforderlich ist, werden keine Cookies gesetzt.
+        </p>
+        <p>
+            Ein Consent- bzw. Cookie-Banner wird daher nicht eingesetzt.
+        </p>
+
+        <h3>7. Externe Links</h3>
+        <p>
+            Diese Website kann Links zu externen Websites enthalten.
+        </p>
+        <p>
+            Wenn Sie einen solchen Link aufrufen, verlassen Sie broeker-net.de. Für die Verarbeitung
+            personenbezogener Daten auf der anschließend aufgerufenen Website ist der jeweilige Betreiber verantwortlich.
+        </p>
+        <p>
+            Durch das bloße Anzeigen eines externen Links werden von dieser Website keine personenbezogenen Daten
+            an den Betreiber der verlinkten Website übertragen.
+        </p>
+
+        <h3>8. Ihre Rechte</h3>
+        <p>
+            Sie haben im Rahmen der gesetzlichen Voraussetzungen insbesondere folgende Rechte hinsichtlich Ihrer
+            personenbezogenen Daten:
+        </p>
+        <ul>
+            <li>Recht auf Auskunft gemäß Art. 15 DSGVO,</li>
+            <li>Recht auf Berichtigung gemäß Art. 16 DSGVO,</li>
+            <li>Recht auf Löschung gemäß Art. 17 DSGVO,</li>
+            <li>Recht auf Einschränkung der Verarbeitung gemäß Art. 18 DSGVO,</li>
+            <li>Recht auf Datenübertragbarkeit gemäß Art. 20 DSGVO sowie</li>
+            <li>Recht auf Widerspruch gegen bestimmte Verarbeitungen gemäß Art. 21 DSGVO.</li>
+        </ul>
+        <p>
+            Soweit eine Verarbeitung auf Ihrer Einwilligung beruht, haben Sie das Recht, eine erteilte Einwilligung
+            jederzeit mit Wirkung für die Zukunft zu widerrufen.
+        </p>
+        <p>
+            Zur Wahrnehmung Ihrer Rechte genügt eine formlose Mitteilung an:
+            <a href="mailto:rb@broeker-net.de">rb@broeker-net.de</a>
+        </p>
+
+        <h3>9. Widerspruch gegen die Verarbeitung aufgrund berechtigter Interessen</h3>
+        <p>
+            Soweit personenbezogene Daten auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO verarbeitet werden,
+            haben Sie nach Maßgabe von Art. 21 DSGVO das Recht, aus Gründen, die sich aus Ihrer besonderen Situation
+            ergeben, jederzeit Widerspruch gegen diese Verarbeitung einzulegen.
+        </p>
+        <p>
+            Im Falle eines berechtigten Widerspruchs werden die betreffenden personenbezogenen Daten nicht
+            weiterverarbeitet, es sei denn, es bestehen zwingende schutzwürdige Gründe für die Verarbeitung oder
+            die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.
+        </p>
+
+        <h3>10. Beschwerderecht bei einer Aufsichtsbehörde</h3>
+        <p>
+            Sie haben das Recht, sich bei einer Datenschutzaufsichtsbehörde zu beschweren, wenn Sie der Ansicht sind,
+            dass die Verarbeitung Ihrer personenbezogenen Daten gegen datenschutzrechtliche Vorschriften verstößt.
+        </p>
+        <p>
+            Für Nordrhein-Westfalen ist insbesondere folgende Aufsichtsbehörde zuständig:
+        </p>
+        <p>
+            <strong>Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen</strong><br>
+            Postfach 20 04 44<br>
+            40102 Düsseldorf
+        </p>
+        <p>
+            Sie können sich auch an eine andere für Sie zuständige Datenschutzaufsichtsbehörde wenden.
+        </p>
+
+        <h3>11. Keine automatisierte Entscheidungsfindung</h3>
+        <p>
+            Eine automatisierte Entscheidungsfindung einschließlich Profiling im Sinne von Art. 22 DSGVO findet
+            auf dieser Website nicht statt.
+        </p>
+
+        <h3>12. Aktualität dieser Datenschutzerklärung</h3>
+        <p>
+            Diese Datenschutzerklärung wird angepasst, wenn sich die technischen Funktionen dieser Website oder
+            die rechtlichen Anforderungen ändern.
+        </p>
+        <p><strong>Stand: August 2026</strong></p>
+    </div>
+</section>
+</main>
+
+<footer>
+    <div class="container footer-inner">
+        <div>b-net · Projektmanagement · Project Coaching</div>
+        <div class="footer-links">
+            <a href="#kontakt">Kontakt</a>
+            <a href="#impressum">Impressum</a>
+            <a href="#datenschutz">Datenschutz</a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
+'''
+
+path = Path("/mnt/data/broeker-net_neue_internetseite_mit_rechtstexten.html")
+path.write_text(html, encoding="utf-8")
+
+print(f"Erstellt: {path}")
