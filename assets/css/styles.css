@@ -107,7 +107,7 @@ img{max-width:100%;display:block}
 .decision{margin-top:26px;background:var(--ink);color:#fff;border-radius:14px;padding:22px 24px}
 .decision .mini-label{color:#8cb2ff}
 .decision-flow{font-weight:750;line-height:1.55}
-.decision small{display:block;margin-top:9px;color:#ccd2db;font-size:13px}
+.decision small{display:block;margin-top:9px;color:#ccd2db;font-size:14px}
 
 .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:58px;align-items:start}
 .about-grid h2{margin-bottom:20px}
