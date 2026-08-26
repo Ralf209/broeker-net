@@ -109,6 +109,7 @@ img{max-width:100%;display:block}
 .decision-flow{font-weight:750;line-height:1.55;color:var(--ink);}
 .decision small{display:block;margin-top:9px;color:var(--muted);font-size:16px;*/
                 
+
 .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:58px;align-items:start}
 .about-grid h2{margin-bottom:20px}
 .about-grid p{font-size:18px;color:var(--muted);margin:0 0 18px}
