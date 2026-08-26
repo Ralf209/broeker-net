@@ -47,8 +47,8 @@ img{max-width:100%;display:block}
 
 .hero-photo{position:relative;width:min(540px,100%);max-width:540px;justify-self:end}
 .hero-photo img{width:540px;height:540px;max-width:100%;aspect-ratio:1/1;object-fit:cover;object-position:50% 35%;border-radius:28px 28px 86px 28px;box-shadow:var(--shadow)}
-.hero-photo:before{content:"";position:absolute;left:-18px;bottom:-18px;width:54%;height:7px;background:var(--blue);border-radius:8px}
-.hero-photo:after{content:"";position:absolute;right:-15px;top:32px;width:54px;height:54px;border:8px solid var(--blue);border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;opacity:.85}
+/*.hero-photo:before{content:"";position:absolute;left:-18px;bottom:-18px;width:54%;height:7px;background:var(--blue);border-radius:8px}
+.hero-photo:after{content:"";position:absolute;right:-15px;top:32px;width:54px;height:54px;border:8px solid var(--blue);border-left-color:transparent;border-bottom-color:transparent;border-radius:50%;opacity:.85}*/
 
 .brand-wave{position:absolute;left:0;right:0;bottom:-1px;height:42px}
 .brand-wave svg{width:100%;height:100%;display:block}
