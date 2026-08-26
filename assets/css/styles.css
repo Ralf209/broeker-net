@@ -104,7 +104,7 @@ img{max-width:100%;display:block}
 .decision{margin-top:30px;background:var(--blue-light);color:var(--ink);border:1px solid var(--line);border-left:5px solid var(--blue);border-radius:0 14px 14px 0;padding:22px 24px;}
 .decision .mini-label{color:var(--blue);}
 .decision-flow{font-weight:750;line-height:1.55;color:var(--ink);}
-.decision small{display:block;margin-top:9px;color:var(--muted);font-size:13px;
+.decision small{display:block;margin-top:9px;color:var(--muted);font-size:14px;
                 
 .about-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:58px;align-items:start}
 .about-grid h2{margin-bottom:20px}
